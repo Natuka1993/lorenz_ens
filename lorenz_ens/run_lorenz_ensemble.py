@@ -18,41 +18,32 @@ PERTURBATION_SCALE = 0.3  # std dev of initial perturbations
 SAVE_PATH = "lorenz_ensemble_predictability.png"
 
 
-def main():
-    """Run the full ensemble experiment."""
-    # Step 1 — Create model
-    model = Lorenz63()
+# Step 1 — Create model
+model = Lorenz63()
 
-    # Step 2 — Generate reference trajectory
-    # Spin up from (1, 1, 1) for SPINUP_STEPS to let transients die out
-    spinup = model.run(np.array([1.0, 1.0, 1.0]), DT, SPINUP_STEPS)
-    # Run the reference from the end of the spinup
-    reference = model.run(spinup[-1], DT, REFERENCE_STEPS)
+# Step 2 — Generate reference trajectory
+spinup    = model.run(np.array([1.0, 1.0, 1.0]), DT, SPINUP_STEPS)
+reference = model.run(spinup[-1], DT, REFERENCE_STEPS)
 
-    # Step 4 — Create initial condition clouds
-    np.random.seed(42)  # reproducibility
-    deep_left_state = np.array([-15,1,45])
-    high_left_state = np.array([-8,-3,34])
-    saddle_state = np.array([0,0,18])
-    ics_deep = deep_left_state + np.random.randn(N_MEMBERS, 3) * PERTURBATION_SCALE
-    ics_high = high_left_state + np.random.randn(N_MEMBERS, 3) * PERTURBATION_SCALE
-    ics_saddle = saddle_state + np.random.randn(N_MEMBERS, 3) * PERTURBATION_SCALE
+# Step 3 — Create initial condition clouds
+np.random.seed(42)
+deep_left_state = np.array([-15, 1, 45])
+high_left_state = np.array([-8, -3, 34])
+saddle_state    = np.array([0, 0, 18])
+ics_deep   = deep_left_state + np.random.randn(N_MEMBERS, 3) * PERTURBATION_SCALE
+ics_high   = high_left_state + np.random.randn(N_MEMBERS, 3) * PERTURBATION_SCALE
+ics_saddle = saddle_state    + np.random.randn(N_MEMBERS, 3) * PERTURBATION_SCALE
 
-    # Step 5 — Run ensembles
-    ensemble_deep = model.run_ensemble(ics_deep, DT, ENSEMBLE_STEPS)
-    ensemble_high = model.run_ensemble(ics_high, DT, ENSEMBLE_STEPS)
-    ensemble_saddle = model.run_ensemble(ics_saddle, DT, ENSEMBLE_STEPS)
+# Step 4 — Run ensembles
+ensemble_deep   = model.run_ensemble(ics_deep,   DT, ENSEMBLE_STEPS)
+ensemble_high   = model.run_ensemble(ics_high,   DT, ENSEMBLE_STEPS)
+ensemble_saddle = model.run_ensemble(ics_saddle, DT, ENSEMBLE_STEPS)
 
-    # Step 6 — Plot
-    fig, axes = plot_ensemble_panels(
-        [ensemble_deep, ensemble_high, ensemble_saddle],
-        reference,
-        ["(a) Deep left lobe", "(b) High left lobe", "(c) Saddle region"],
-        save_path=SAVE_PATH,
-    )
-
-    print(f"Figure saved to {SAVE_PATH}")
-
-
-if __name__ == "__main__":
-    main()
+# Step 5 — Plot
+fig, axes = plot_ensemble_panels(
+    [ensemble_deep, ensemble_high, ensemble_saddle],
+    reference,
+    ["(a) Deep left lobe", "(b) High left lobe", "(c) Saddle region"],
+    save_path=SAVE_PATH,
+)
+print(f"Figure saved to {SAVE_PATH}")
