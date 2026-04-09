@@ -1,27 +1,19 @@
-# lorenz_ens
+# lorenz-ens-natuka1993
 
 Lorenz63 ensemble predictability experiment for ATOC 4815/5815.
 
-## Usage
+## Author
+Natalia Jorbenadze
 
-Without installing:
+## Description
+This package runs a Lorenz63 ensemble experiment and creates a figure showing
+how predictability depends on initial conditions in different regions of the
+Lorenz attractor.
+
+## Installation
+
+Clone your fork:
 
 ```bash
-python run.py
-```
-
-After packaging (lab exercise):
-
-```bash
-pip install -e .
-run-lorenz
-```
-
-Both generate `lorenz_ensemble_predictability.png`.
-
-## Files
-
-- `lorenz63.py` — Lorenz63 model class
-- `integrators.py` — Forward Euler integrator
-- `plotting.py` — Ensemble visualization
-- `run_lorenz_ensemble.py` — Driver script
+git clone https://github.com/Natuka1993/lorenz_ens.git
+cd lorenz_ens

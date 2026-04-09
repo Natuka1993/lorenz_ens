@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lorenz-ens-natuka1993"
+version = "0.1.0"
+description = "Lorenz63 ensemble experiment for ATOC 4815/5815"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Natalia Jorbenadze" }
+]
+dependencies = [
+  "numpy",
+  "matplotlib"
+]
+
+[project.scripts]
+run-lorenz = "lorenz_ens.run_lorenz_ensemble:main"
+
+[tool.setuptools.packages.find]
+include = ["lorenz_ens*"]
